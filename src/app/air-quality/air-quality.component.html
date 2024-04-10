@@ -1,0 +1,17 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Air Quality</h1>
+  <div class="input-group">
+    <input class="form-control mb-3" type="text" placeholder="Enter country name" [(ngModel)]="countryName">
+  </div>
+  <button class="btn btn-primary" (click)="getAirQuality()">Get Air Quality</button>
+  <div *ngIf="airQualityData">
+      <h2 class="mt-4">Air Quality in</h2>
+      <p>Air Pollution Index: {{ airQualityData.list[0].main.aqi }}</p>
+      <p>Carbon Monoxide (CO): {{ airQualityData.list[0].components.co }}</p>
+      <p>Nitrogen Dioxide (NO<sub>2</sub>): {{ airQualityData.list[0].components.no2 }}</p>
+      <p>Ozone (O<sub>3</sub>): {{ airQualityData.list[0].components.o3 }}</p>
+      <p>Sulfur Dioxide (SO<sub>2</sub>): {{ airQualityData.list[0].components.so2 }}</p>
+      <p>Particulate Matter (PM<sub>2.5</sub>): {{ airQualityData.list[0].components.pm2_5 }}</p>
+      <p>Particulate Matter (PM<sub>10</sub>): {{ airQualityData.list[0].components.pm10 }}</p>
+  </div>
+</div>
