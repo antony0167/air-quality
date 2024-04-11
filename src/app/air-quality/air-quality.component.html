@@ -16,21 +16,16 @@
         {{ geolocationError }}
       </div>
       <div *ngIf="airQualityData && !(airQualityError || geolocationError)" class="mt-4 p-4 bg-light" [ngClass]="{
-        'border-green': airQualityData.list[0].main.aqi === 1,
-        'border-yellowgreen': airQualityData.list[0].main.aqi === 2,
-        'border-orange': airQualityData.list[0].main.aqi === 3,
-        'border-red': airQualityData.list[0].main.aqi === 4,
-        'border-purple': airQualityData.list[0].main.aqi === 5
+        'border-green': Math.floor(airQualityData.indexes[0].aqi / 20) + 1 === 5,
+        'border-yellowgreen': Math.floor(airQualityData.indexes[0].aqi / 20) + 1 === 4,
+        'border-orange': Math.floor(airQualityData.indexes[0].aqi / 20) + 1 === 3,
+        'border-red': Math.floor(airQualityData.indexes[0].aqi / 20) + 1 === 2,
+        'border-purple': Math.floor(airQualityData.indexes[0].aqi / 20) + 1 === 1
       }">
-      <h2>Air Quality in {{ countryName }}</h2>
-          <p class="mb-2">The Air in {{ countryName }} is {{ quality.get(airQualityData.list[0].main.aqi) }}</p>
-          <p>Air Pollution Index: {{ airQualityData.list[0].main.aqi }}</p>
-          <p>Carbon Monoxide (CO): {{ airQualityData.list[0].components.co }}</p>
-          <p>Nitrogen Dioxide (NO<sub>2</sub>): {{ airQualityData.list[0].components.no2 }}</p>
-          <p>Ozone (O<sub>3</sub>): {{ airQualityData.list[0].components.o3 }}</p>
-          <p>Sulfur Dioxide (SO<sub>2</sub>): {{ airQualityData.list[0].components.so2 }}</p>
-          <p>Particulate Matter (PM<sub>2.5</sub>): {{ airQualityData.list[0].components.pm2_5 }}</p>
-          <p>Particulate Matter (PM<sub>10</sub>): {{ airQualityData.list[0].components.pm10 }}</p>
+        <h2>Air Quality in {{ countryName }}</h2>
+        <p>Air Pollution Index: {{ airQualityData.indexes[0].aqi }} / 100</p>
+        <p>Air Quality Category: {{ airQualityData.indexes[0].category }}</p>
+        <p>Dominant Pollutant: {{ airQualityData.indexes[0].dominantPollutant }}</p>
       </div>
     </div>
   </div>

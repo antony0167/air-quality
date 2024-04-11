@@ -10,11 +10,15 @@ export class AirQualityApiService {
 
   constructor(private http: HttpClient) { }
 
-  API_key = '188eab7c2515f1282055f931a45219b2';
-
-  Google_API_key = 'AIzaSyBmDPSJ48OeC5U36oRlbyxiq7O8hWFK9Ac';
+  Google_API_key = 'AIzaSyAI-hfciLoy9ZCktxnRWeyuSPSb5S5waPw';
   readPollution(lat: number, lon: number) {
-    return this.http.get<AirQualityData>(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${this.API_key}`)
+    return this.http.post<AirQualityData>(`https://airquality.googleapis.com/v1/currentConditions:lookup?key=${this.Google_API_key}`,
+      {
+        "location": {
+          "latitude": lat,
+          "longitude": lon
+        }
+      })
   }
 
   readCoordinates(country: string) {

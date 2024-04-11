@@ -57,7 +57,11 @@ export class AirQualityComponent {
             this.countryName = countryName;
           },
           error: err => {
-            this.geolocationError = err;
+            if (err.status == 400) {
+              this.geolocationError = err.error.error.message;
+            } else {
+              this.geolocationError = "Something went wrong";
+            }
           },
         });
       },
@@ -66,4 +70,6 @@ export class AirQualityComponent {
       },
     });
   }
+
+  protected readonly Math = Math;
 }
