@@ -8,3 +8,8 @@ This project is a simple web application built with Angular that allows users to
 * TypeScript
 * HTML
 * CSS (Bootstrap)
+
+## Link to the project
+
+Check out the project [here](https://air-quality-419914.web.app)
+
