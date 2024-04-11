@@ -1,17 +1,37 @@
 <div class="container mt-5">
-  <h1 class="mb-4">Air Quality</h1>
-  <div class="input-group">
-    <input class="form-control mb-3" type="text" placeholder="Enter country name" [(ngModel)]="countryName">
-  </div>
-  <button class="btn btn-primary" (click)="getAirQuality()">Get Air Quality</button>
-  <div *ngIf="airQualityData">
-      <h2 class="mt-4">Air Quality in</h2>
-      <p>Air Pollution Index: {{ airQualityData.list[0].main.aqi }}</p>
-      <p>Carbon Monoxide (CO): {{ airQualityData.list[0].components.co }}</p>
-      <p>Nitrogen Dioxide (NO<sub>2</sub>): {{ airQualityData.list[0].components.no2 }}</p>
-      <p>Ozone (O<sub>3</sub>): {{ airQualityData.list[0].components.o3 }}</p>
-      <p>Sulfur Dioxide (SO<sub>2</sub>): {{ airQualityData.list[0].components.so2 }}</p>
-      <p>Particulate Matter (PM<sub>2.5</sub>): {{ airQualityData.list[0].components.pm2_5 }}</p>
-      <p>Particulate Matter (PM<sub>10</sub>): {{ airQualityData.list[0].components.pm10 }}</p>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="mb-4">Air Quality</h1>
+      <hr>
+      <form #f="ngForm" (ngSubmit)="getAirQuality(f.value.countryName)">
+        <div class="input-group">
+          <input class="form-control mb-3" type="text" placeholder="Enter name of the country, city, etc..." ngModel name="countryName">
+        </div>
+          <button class="btn btn-primary" type="submit">Get Air Quality</button>
+      </form>
+      <div *ngIf="airQualityError" class="alert alert-warning mt-4" role="alert">
+        {{ airQualityError }}
+      </div>
+      <div *ngIf="geolocationError" class="alert alert-warning mt-4" role="alert">
+        {{ geolocationError }}
+      </div>
+      <div *ngIf="airQualityData && !(airQualityError || geolocationError)" class="mt-4 p-4 bg-light" [ngClass]="{
+        'border-green': airQualityData.list[0].main.aqi === 1,
+        'border-yellowgreen': airQualityData.list[0].main.aqi === 2,
+        'border-orange': airQualityData.list[0].main.aqi === 3,
+        'border-red': airQualityData.list[0].main.aqi === 4,
+        'border-purple': airQualityData.list[0].main.aqi === 5
+      }">
+      <h2>Air Quality in {{ countryName }}</h2>
+          <p class="mb-2">The Air in {{ countryName }} is {{ quality.get(airQualityData.list[0].main.aqi) }}</p>
+          <p>Air Pollution Index: {{ airQualityData.list[0].main.aqi }}</p>
+          <p>Carbon Monoxide (CO): {{ airQualityData.list[0].components.co }}</p>
+          <p>Nitrogen Dioxide (NO<sub>2</sub>): {{ airQualityData.list[0].components.no2 }}</p>
+          <p>Ozone (O<sub>3</sub>): {{ airQualityData.list[0].components.o3 }}</p>
+          <p>Sulfur Dioxide (SO<sub>2</sub>): {{ airQualityData.list[0].components.so2 }}</p>
+          <p>Particulate Matter (PM<sub>2.5</sub>): {{ airQualityData.list[0].components.pm2_5 }}</p>
+          <p>Particulate Matter (PM<sub>10</sub>): {{ airQualityData.list[0].components.pm10 }}</p>
+      </div>
+    </div>
   </div>
 </div>

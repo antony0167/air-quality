@@ -20,24 +20,50 @@ export class AirQualityComponent {
   countryName: string = '';
   airQualityData: AirQualityData | undefined;
 
-  getAirQuality() {
+  airQualityError = "";
+  geolocationError = "";
+
+  quality = new Map<number, string>([
+    [1, "Good"],
+    [2, "Fair"],
+    [3, "Moderate"],
+    [4, "Poor"],
+    [5, "Very Poor"]
+  ]);
+
+  getAirQuality(countryName: string) {
     let geocodingObs: Observable<GeocodingData>;
 
-    geocodingObs = this.airQualityApiService.readCoordinates(this.countryName);
+    geocodingObs = this.airQualityApiService.readCoordinates(countryName);
 
     geocodingObs.subscribe({
       next: data => {
+
+        this.geolocationError = "";
+        this.airQualityError = "";
+
+        if (data.status == "ZERO_RESULTS") {
+          this.geolocationError = "There is no place on earth with this name. Please provide correct name.";
+          return;
+        } else if (data.status != "OK") {
+          this.geolocationError = "Something went wrong. Please try again."
+        }
         const lat = data.results[0].geometry.location.lat;
         const lon = data.results[0].geometry.location.lng;
 
         this.airQualityApiService.readPollution(lat, lon).subscribe({
           next: pollutionData => {
             this.airQualityData = pollutionData;
+            this.countryName = countryName;
           },
-          error: err => console.error(err)
+          error: err => {
+            this.geolocationError = err;
+          },
         });
       },
-      error: err => console.error(err)
+      error: err => {
+        this.airQualityError = err;
+      },
     });
   }
 }

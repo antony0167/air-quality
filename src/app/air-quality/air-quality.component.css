@@ -1,0 +1,24 @@
+.border-green {
+  border: 5px solid green;
+  border-radius: 10px;
+}
+
+.border-yellowgreen {
+  border: 5px solid yellowgreen;
+  border-radius:10px;
+}
+
+.border-orange {
+  border: 5px solid orange;
+  border-radius: 10px;
+}
+
+.border-red {
+  border: 5px solid red;
+  border-radius: 10px;
+}
+
+.border-purple {
+  border: 5px solid purple;
+  border-radius: 10px;
+}
